@@ -1,0 +1,9 @@
+import os
+from cerbero.config import Architecture, Platform
+
+path = os.path.dirname(os.path.abspath(__file__))
+external_recipes = {'gtk': (os.path.join(path, 'recipes'), 1)}
+external_packages = {'gtk': (os.path.join(path, 'packages'), 1)}
+
+home_dir = os.path.expanduser('~/gtk-build')
+variants=['gtk3']

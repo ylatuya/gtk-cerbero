@@ -1,0 +1,88 @@
+# -*- Mode: Python -*- vi:si:et:sw=4:sts=4:ts=4:syntax=python
+
+
+class Recipe(recipe.Recipe):
+    name = 'gtk+3-git'
+    version = 'git'
+    licenses = [License.LGPLv2_1Plus]
+    stype = SourceType.GIT
+    remotes = {'origin': 'git://git.gnome.org/gtk+'}
+    configure_options = '--with-included-immodules '
+    deps = ['glib', 'atk', 'pango', 'gdk-pixbuf', 'cairo']
+    platform_deps = {
+        Platform.LINUX: ['at-spi2-atk'],
+    }
+    use_system_libs = True
+
+    files_libs = ['libgailutil-3', 'libgdk-3', 'libgtk-3']
+
+    files_bins = ['gtk3-widget-factory',
+                  'gtk-launch',
+                  'gtk-query-immodules-3.0',
+                  'gtk-update-icon-cache']
+
+    files_devel = [
+        'bin/gtk3-demo',
+        'bin/gtk3-demo-application',
+        'lib/pkgconfig/gtk+-3.0.pc',
+        'lib/pkgconfig/gdk-3.0.pc',
+        'lib/pkgconfig/gail-3.0.pc',
+        'include/gtk-3.0',
+        'include/gail-3.0',
+    ]
+
+    files_misc = ['etc/gtk-3.0/',
+                  'share/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml',
+                  'share/glib-2.0/schemas/gschema.dtd',
+                  'share/glib-2.0/schemas/gschemas.compiled',
+                  'share/glib-2.0/schemas/org.gtk.Demo.gschema.xml',
+                  'share/glib-2.0/schemas/org.gtk.exampleapp.gschema.xml',
+                  'share/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml',
+                  'share/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml',
+                  'share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml'
+                 ]
+
+    platform_files_libs = {
+        Platform.WINDOWS: ['libgtk-win32-3.0', 'libgdk-win32-3.0'],
+        Platform.DARWIN: ['libgtk-quartz-3.0', 'libgdk-quartz-3.0'],
+        Platform.LINUX: ['libgtk-x11-3.0', 'libgdk-x11-3.0'],
+        }
+
+    platform_files_devel = {
+        Platform.WINDOWS: [
+            'lib/pkgconfig/gtk+-win32-3.0.pc', 'lib/pkgconfig/gdk-win32-3.0.pc'],
+        Platform.DARWIN: [
+            'lib/pkgconfig/gtk+-quartz-3.0.pc', 'lib/pkgconfig/gdk-quartz-3.0.pc'],
+        Platform.LINUX: [
+            'lib/pkgconfig/gtk+-x11-3.0.pc', 'lib/pkgconfig/gdk-x11-3.0.pc'],
+        }
+    platform_files_themes = {
+        Platform.LINUX: [
+            'share/themes/Default/gtk-3.0/gtk-keys.css',
+            'share/themes/Emacs/gtk-3.0/gtk-keys.css'
+        ],
+        Platform.WINDOWS: [
+            'share/themes/MS-Windows/gtk-3.0/gtkrc',
+            'lib/gtk-3.0/2.10.0/engines/libwimp.dll',]
+        }
+    files_lang = ['gtk30', 'gtk30-properties']
+    files_typelibs = ['Gdk-3.0', 'Gtk-3.0']
+
+    platform_files_typelibs = {
+        Platform.LINUX: ['GdkX11-3.0']
+    }
+
+    def prepare(self):
+        if self.config.target_platform != Platform.LINUX:
+            self.configure_options += '--disable-gtk-doc '
+        if self.config.target_platform == Platform.WINDOWS:
+            self.configure_options += '--disable-papi --disable-cups '
+            if self.config.platform != Platform.WINDOWS:
+                self.append_env ['PKG_CONFIG_FOR_BUILD'] = \
+                        self.relative_path ("gtk+3/pkg-config-for-build")
+                self.append_env ['CC_FOR_BUILD'] = \
+                        self.relative_path ("gtk+3/gcc-for-build")
+        elif self.config.target_platform == Platform.DARWIN:
+            self.configure_options += '--enable-quartz-backend '
+            # this patch will break on other OSs without objective-c compiler installed
+            self.patches = ['gtk+3/0001-osx-fix-build-of-quartz-input-module.patch']

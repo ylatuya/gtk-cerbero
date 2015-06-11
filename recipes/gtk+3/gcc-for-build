@@ -1,0 +1,4 @@
+#!/bin/sh
+unset C_INCLUDE_PATH
+unset CPLUS_INCLUDE_PATH
+exec gcc "$@"

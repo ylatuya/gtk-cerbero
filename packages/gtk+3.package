@@ -1,0 +1,51 @@
+# vi:si:et:sw=4:sts=4:ts=4:syntax=python
+# -*- Mode: Python -*-
+
+
+class Package(package.Package):
+    name = 'gtk+3'
+    shortdesc = 'Gtk+ 3 package'
+    longdesc = 'Gtk+ 3 package'
+    url = "http://www.gtk.org"
+    version = '3.17.3'
+    license = License.LGPL
+    vendor = 'Gtk+ Project'
+    org = 'org.gtk'
+    uuid = 'fae6046d-5a39-4d54-1111-3770d2f316f5'
+
+    files = [
+            'atk:libs',
+            'bzip2:libs',
+            'cairo:libs',
+            'expat:libs',
+            'fontconfig:libs:etc',
+            'freetype:libs',
+            'gdk-pixbuf:bins:libs:modules:lang',
+            'glib:libs:lang:bins:schemas',
+            'gtk+3',
+            'harfbuzz:libs',
+            'libffi:libs',
+            'libjpeg-turbo:libs',
+            'libpng:libs',
+            'pango:libs:modules',
+            'pixman:libs',
+            'tiff:libs',
+            'zlib:libs',
+    ]
+
+    platform_files = {
+        Platform.WINDOWS: [
+            'gettext:libs:lang',
+            'libiconv:libs:lang',
+            'mingw-runtime'
+            ],
+        Platform.DARWIN: [
+            'gettext:libs:lang',
+            'libiconv:libs:lang',
+            ],
+        Platform.LINUX: [],
+        }
+
+    def prepare(self):
+        if self.config.variants.gi:
+            self.files.append('gobject-introspection:libs:typelibs')

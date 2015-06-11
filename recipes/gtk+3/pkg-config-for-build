@@ -1,0 +1,4 @@
+#!/bin/sh
+unset PKG_CONFIG_PATH
+unset PKG_CONFIG_LIBDIR
+exec /usr/bin/pkg-config "$@"

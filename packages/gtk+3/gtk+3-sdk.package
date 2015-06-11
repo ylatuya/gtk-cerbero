@@ -1,0 +1,46 @@
+# -*- Mode: Python -*- vi:si:et:sw=4:sts=4:ts=4:syntax=python
+
+
+class SDKPackage(package.SDKPackage):
+
+    name = "gtk+3-sdk"
+    shortdesc = "Gtk+ 3 SDK"
+    longdesc = "Gtk+ 3 SDK"
+    title = "Gtk+ 3 SDK"
+    url = "http://www.gtk.org"
+    version = '3.17.2'
+    sdk_version = '3.0'
+    license = License.LGPL
+    uuid = 'b1b4b712-0d09-4a34-4545-8a69b6deecc2'
+    vendor = "Gtk+ Project"
+    org = "org.gtk"
+    ignore_package_prefix = True
+    packages =[
+               # (name, required, selected)
+               ('gtk+3', True, True),
+              ]
+    platform_packages = {
+            Platform.WINDOWS: [
+                ('vsintegration-1.0', True, False),
+                #('gtk+3-vs-templates', True, False),
+                ],
+            }
+
+    install_dir = {
+        Platform.WINDOWS: 'gtk+3',
+        Platform.LINUX: '/opt/gtk+-3/',
+        Platform.DARWIN: '/Library/Frameworks/Gtk+.framework/',
+        }
+
+    root_env_var = 'GTK_3_ROOT_%(arch)s'
+    wix_upgrade_code = {
+        PackageType.DEVEL: {
+            Architecture.X86 : 'c0c6126d-1222-4577-9598-e900f594fd06',
+            Architecture.X86_64: '49c4a3aa-3333-453c-b82e-ecd05fac0693',
+            },
+        PackageType.RUNTIME: {
+            Architecture.X86 : 'ebe0c791-4141-4f7e-a4eb-18012a0e319d',
+            Architecture.X86_64: 'c20a66dc-9595-4e6d-a68a-d0f836b2b3cf',
+            },
+        }
+    osx_framework_library = ('Gtk+', 'lib/Gtk+')
