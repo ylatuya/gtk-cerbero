@@ -7,6 +7,4 @@ external_packages = {'gtk': (os.path.join(path, 'packages'), 1)}
 
 home_dir = os.path.expanduser('~/gtk-build')
 
-# Disable giobject-introspection in cross-compilation
-if platform == target_platform:
-    variants=['gi']
+variants=['gtk3', 'gi']
