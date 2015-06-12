@@ -4,7 +4,7 @@ from cerbero.ide.xcode.fwlib import DynamicFrameworkLibrary
 
 class Recipe(recipe.Recipe):
     name = 'gtk+3'
-    version = '3.14.1'
+    version = '3.16.4'
     # TODO: check license - some source files are LGPLv2, others LGPLv2+,
     #       others LGPLv2.1+, COPYING is LGPLv2 and the webpage states LGPLv2.1
     licenses = [License.LGPLv2_1Plus]
