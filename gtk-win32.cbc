@@ -1,4 +1,3 @@
-
 import os
 from cerbero.config import Platform, Architecture, Distro, DistroVersion
 

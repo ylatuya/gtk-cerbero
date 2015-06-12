@@ -6,4 +6,7 @@ external_recipes = {'gtk': (os.path.join(path, 'recipes'), 1)}
 external_packages = {'gtk': (os.path.join(path, 'packages'), 1)}
 
 home_dir = os.path.expanduser('~/gtk-build')
-variants=['gtk3']
+
+# Disable giobject-introspection in cross-compilation
+if platform == target_platform:
+    variants=['gi']
