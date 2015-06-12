@@ -2,8 +2,7 @@
 
 
 class SDKPackage(package.SDKPackage):
-
-    name = "gtk+3-sdk"
+    name = "gtk-3-sdk"
     shortdesc = "Gtk+ 3 SDK"
     longdesc = "Gtk+ 3 SDK"
     title = "Gtk+ 3 SDK"
@@ -17,7 +16,7 @@ class SDKPackage(package.SDKPackage):
     ignore_package_prefix = True
     packages =[
                # (name, required, selected)
-               ('gtk+3', True, True),
+               ('gtk-3', True, True),
               ]
     platform_packages = {
             Platform.WINDOWS: [

@@ -3,7 +3,7 @@
 
 
 class Package(package.Package):
-    name = 'gtk+3'
+    name = 'gtk-3'
     shortdesc = 'Gtk+ 3 package'
     longdesc = 'Gtk+ 3 package'
     url = "http://www.gtk.org"
